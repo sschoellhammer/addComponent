@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class PostProcessor : AssetPostprocessor
 {
+    /*
     private void OnPostprocessModel(GameObject g)
     {
         if (assetImporter.GetType() == typeof(ModelImporter))
@@ -19,7 +21,7 @@ public class PostProcessor : AssetPostprocessor
             //g.AddComponent<MyComponent>();
             
         }
-    }
+    }*/
     
     
     public void OnPostprocessGameObjectWithUserProperties(
@@ -31,7 +33,13 @@ public class PostProcessor : AssetPostprocessor
         if (((IList) incomingPropertyNames).Contains(propertyName))
         {
             Debug.Log("myAttr");
-            g.AddComponent<MyComponent2>();
+            var c = g.AddComponent<MyComponent>();
+            c.data = new MyComponent.Data(10);
+            
+            c.triset = new MyComponent.TriSelectionSet("bra", new List<int> {0,2,3,4});
+            Debug.Log(c.triset.name);
+            //EditorUtility.SetDirty(c);
+            //EditorUtility.SetDirty(g);
         }
     }
     
